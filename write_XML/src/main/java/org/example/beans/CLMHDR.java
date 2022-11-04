@@ -1,6 +1,6 @@
 package org.example.beans;
 
-import org.example.XML.CreateXmlFileDemo;
+import org.example.record.CreateXmlFileDemo;
 
 import java.util.ArrayList;
 import java.util.List;

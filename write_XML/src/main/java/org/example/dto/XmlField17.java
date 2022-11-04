@@ -1,4 +1,4 @@
-package org.example.XML;
+package org.example.dto;
 
 public class XmlField17 {
 

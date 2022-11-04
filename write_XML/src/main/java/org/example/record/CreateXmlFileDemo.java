@@ -1,4 +1,4 @@
-package org.example.XML;
+package org.example.record;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -18,7 +18,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class CreateXmlFileDemo {
-
     public static void writeXml(List<String[]> providerList, List<String[]> clmnotList, List<String[]> ssnList) {
         try {
             String[] providerData;
@@ -182,56 +181,60 @@ public class CreateXmlFileDemo {
 
                 Element field7 = doc.createElement("field");
                 field7.setAttribute("fieldName", "cProcessedDate");
-                field7.setTextContent("I");
+                field7.setTextContent(" ");
                 record01.appendChild(field7);
 
                 Element field8 = doc.createElement("field");
                 field8.setAttribute("fieldName", "cDocumentType");
-                field8.setTextContent("009");
+                field8.setTextContent(" ");
                 record01.appendChild(field8);
 
                 Element field9 = doc.createElement("field");
-                field9.setAttribute("fieldName", "cClaimType");
-                field9.setTextContent("MED");
+                field9.setAttribute("fieldName", "cGroupHierarchy1");
+                field9.setTextContent(" ");
                 record01.appendChild(field9);
 
                 Element field10 = doc.createElement("field");
-                field10.setAttribute("fieldName", "cPayerName");
+                field10.setAttribute("fieldName", "cGroupHierarchy2");
                 field10.setTextContent(" ");
                 record01.appendChild(field10);
 
                 Element field11 = doc.createElement("field");
-                field11.setAttribute("fieldName", "cPayerTin");
+                field11.setAttribute("fieldName", "cProviderTaxId");
                 field11.setTextContent(" ");
                 record01.appendChild(field11);
 
                 Element field12 = doc.createElement("field");
-                field12.setAttribute("fieldName", "cPayerAddress");
+                field12.setAttribute("fieldName", "cProviderName");
                 field12.setTextContent(" ");
                 record01.appendChild(field12);
 
                 Element field13 = doc.createElement("field");
-                field13.setAttribute("fieldName", "cPayerCity");
+                field13.setAttribute("fieldName", "cProviderAddress1");
                 field13.setTextContent(" ");
                 record01.appendChild(field13);
 
                 Element field14 = doc.createElement("field");
-                field14.setAttribute("fieldName", "cPayerState");
+                field14.setAttribute("fieldName", "cProviderAddress2");
                 field14.setTextContent(" ");
                 record01.appendChild(field14);
 
                 Element field15 = doc.createElement("field");
-                field15.setAttribute("fieldName", "cPayerZip");
+                field15.setAttribute("fieldName", "cClaimRelationString");
                 field15.setTextContent(" ");
                 record01.appendChild(field15);
 
-                Element field16 = doc.createElement("field");
-                field16.setAttribute("fieldName", "cPayerTechContactName");
-                field16.setTextContent(" ");
-                record01.appendChild(field16);
-
                 document.appendChild(record01);
             }
+
+           Element record02 = Record02.getRecord02(doc);
+            document.appendChild(record02);
+
+            Element record03 = Record03.getRecord03(doc);
+            document.appendChild(record03);
+
+            Element record06 = Record06.getRecord06(doc);
+            document.appendChild(record06);
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyMMddHHmmss");
             LocalDateTime now = LocalDateTime.now();
