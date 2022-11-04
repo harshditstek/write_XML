@@ -1,7 +1,6 @@
 package org.example.XML;
 
 public class XmlField00 {
-
         private String cName;
         private String cAddress1;
         private String cAddress2;
