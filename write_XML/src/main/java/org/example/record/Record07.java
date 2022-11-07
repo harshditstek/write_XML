@@ -44,12 +44,12 @@ public class Record07 {
 
         Element field7 = doc.createElement("field");
         field7.setAttribute("fieldName", "cIndividual");
-        field7.setTextContent("I");
+        field7.setTextContent(" ");
         record07.appendChild(field7);
 
         Element field8 = doc.createElement("field");
         field8.setAttribute("fieldName", "cRelationshipToInsured");
-        field8.setTextContent("009");
+        field8.setTextContent(" ");
         record07.appendChild(field8);
         return record07;
 

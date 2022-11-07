@@ -10,7 +10,8 @@ public class CLMHDR {
     public static List<String[]> searchHeaderGroup(String groupNo, String date) {
         String alias = "QTEMP.CLMHDR";
         String file = "testdata.CLMHDR(TRT)";
-        String sql = "SELECT HASSGN,HPROVD,HSSN,HCLMNO,HPROVD,HTOTCL,HDISC,HTOTAL,HTOTDD,HCOPAY,HTOTCO,HFILL6 FROM QTEMP.CLMHDR where HGRPNO = '" + groupNo + "' and HCHKDT = '"+ date +"' LIMIT 1";
+        String sql = "SELECT HASSGN,HPROVD,HSSN,HCLMNO,HPRODT" +
+                ",HTOTCL,HDISC,HTOTAL,HTOTDD,HCOPAY,HTOTCO,HFILL6 FROM QTEMP.CLMHDR where HGRPNO = '" + groupNo + "' and HCHKDT = '"+ date +"' LIMIT 1";
         List<String[]> resultList = iSeries.executeSQLByAlias(sql, alias, file);
         return resultList;
     }

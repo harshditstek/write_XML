@@ -16,7 +16,7 @@ public class Record04 {
         field01.setTextContent("001");
         record04.appendChild(field01);
 
-        Element field2 = doc.createElement("field");
+        Element field2 = doc.createElement("field");//clmnot
         field2.setAttribute("fieldName", "cClaimNumber");
         field2.setTextContent(" ");
         record04.appendChild(field2);

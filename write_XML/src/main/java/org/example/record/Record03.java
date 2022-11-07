@@ -36,7 +36,7 @@ public class Record03 {
 
             Element field4 = doc.createElement("field");
             field4.setAttribute("fieldName", "cDiscount");
-            field4.setTextContent(headerData[6].trim());
+            field4.setTextContent("0");
             record03.appendChild(field4);
 
             Element field5 = doc.createElement("field");
