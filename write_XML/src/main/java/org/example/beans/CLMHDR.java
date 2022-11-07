@@ -10,16 +10,17 @@ public class CLMHDR {
     public static List<String[]> searchHeaderGroup(String groupNo, String date) {
         String alias = "QTEMP.CLMHDR";
         String file = "testdata.CLMHDR(TRT)";
-        String sql = "SELECT HASSGN,HPROVD,HSSN,HCLMNO FROM QTEMP.CLMHDR where HGRPNO = '" + groupNo + "' and HCHKDT = '"+ date +"' LIMIT 1";
+        String sql = "SELECT HASSGN,HPROVD,HSSN,HCLMNO,HPROVD,HTOTCL,HDISC,HTOTAL,HTOTDD,HCOPAY,HTOTCO,HFILL6 FROM QTEMP.CLMHDR where HGRPNO = '" + groupNo + "' and HCHKDT = '"+ date +"' LIMIT 1";
         List<String[]> resultList = iSeries.executeSQLByAlias(sql, alias, file);
         return resultList;
     }
 
     public static List<String[]> searchProvider(String groupNo, String date) {
         List<String[]> clmnotList = new ArrayList<String[]>();
-        List<String[]> ssnList = new ArrayList<String[]>();
+        List<String[]> insureList = new ArrayList<String[]>();
         List<String[]> headerGroup = searchHeaderGroup(groupNo, date);
         List<String[]> providerList = new ArrayList<String[]>();
+        List<String[]> clmdetList = new ArrayList<String[]>();
         String[] result;
         String pprovn = "";
         String hassgn = "";
@@ -43,13 +44,14 @@ public class CLMHDR {
                 clmnotList = getClmnot(hclmno);
             }
             if(!ssn.equals("")){
-                ssnList = getInsure(ssn);
+                insureList = getInsure(ssn);
             }
+            clmdetList = getClmdet(hclmno);
         }
-        CreateXmlFileDemo.writeXml(providerList, clmnotList, ssnList);
+        CreateXmlFileDemo.writeXml(providerList, clmnotList, insureList, headerGroup, clmdetList);
         System.out.println("size:"+providerList.size());
         System.out.println("clmn:"+clmnotList.size());
-        System.out.println("ssn:"+ssnList.size());
+        System.out.println("ssn:"+insureList.size());
         return providerList;
     }
 
@@ -77,6 +79,14 @@ public class CLMHDR {
         String alias =  "QTEMP.INSURE";
         String file = "testdata.INSURE(TRT)";
         String sql = "SELECT * FROM QTEMP.INSURE where ISSN = '"+ issn +"'";
+        List<String[]> resultData = iSeries.executeSQLByAlias(sql, alias, file);
+        return resultData;
+    }
+
+    public static List<String[]> getClmdet(String hclmno){
+        String alias =  "QTEMP.clmdet";
+        String file = "testdata.clmdet(TRT)";
+        String sql = "select * from qtemp.clmdet where dclmno = '"+ hclmno +"' limit 1";
         List<String[]> resultData = iSeries.executeSQLByAlias(sql, alias, file);
         return resultData;
     }

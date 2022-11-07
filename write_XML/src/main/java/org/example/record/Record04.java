@@ -5,7 +5,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class Record04 {
-    public static Element getRecord02(Document doc) {
+    public static Element getRecord04(Document doc) {
         Element record04 = doc.createElement("record");
         Attr attrType = doc.createAttribute("recordType");
         attrType.setValue(String.valueOf("04"));

@@ -18,11 +18,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class CreateXmlFileDemo {
-    public static void writeXml(List<String[]> providerList, List<String[]> clmnotList, List<String[]> ssnList) {
+    public static void writeXml(List<String[]> providerList, List<String[]> clmnotList, List<String[]> insureList,
+                                List<String[]> headerGroup, List<String[]> clmdetList) {
         try {
             String[] providerData;
             String[] clmnotData;
-            String[] ssnData;
+            String[] insureData;
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
@@ -138,8 +139,8 @@ public class CreateXmlFileDemo {
                 //}
             }
 
-            for (int i = 0; i < ssnList.size(); i++) {
-                ssnData = ssnList.get(i);
+            for (int i = 0; i < insureList.size(); i++) {
+                insureData = insureList.get(i);
                 // for (int i = 1; i < 5; i++) {
 
                 //for(int i1=1;i1<5;i1++) {
@@ -160,18 +161,18 @@ public class CreateXmlFileDemo {
 
                 Element field3 = doc.createElement("field");
                 field3.setAttribute("fieldName", "cEnrolleeName");
-                field3.setTextContent(ssnData[3].trim());
+                field3.setTextContent(insureData[3].trim());
                 //field3.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
                 record01.appendChild(field3);
 
                 Element field4 = doc.createElement("field");
                 field4.setAttribute("fieldName", "cEnrolleeLastName");
-                field4.setTextContent(ssnData[4].trim());
+                field4.setTextContent(insureData[4].trim());
                 record01.appendChild(field4);
 
                 Element field5 = doc.createElement("field");
                 field5.setAttribute("fieldName", "cEnrolleeId");
-                field5.setTextContent(ssnData[2].trim());
+                field5.setTextContent(insureData[2].trim());
                 record01.appendChild(field5);
 
                 Element field6 = doc.createElement("field");
@@ -181,22 +182,17 @@ public class CreateXmlFileDemo {
 
                 Element field7 = doc.createElement("field");
                 field7.setAttribute("fieldName", "cProcessedDate");
-                field7.setTextContent(" ");
+                field7.setTextContent(headerGroup.get(0)[4].trim());
                 record01.appendChild(field7);
-
-                Element field8 = doc.createElement("field");
-                field8.setAttribute("fieldName", "cDocumentType");
-                field8.setTextContent(" ");
-                record01.appendChild(field8);
 
                 Element field9 = doc.createElement("field");
                 field9.setAttribute("fieldName", "cGroupHierarchy1");
-                field9.setTextContent(" ");
+                field9.setTextContent("CC6518");
                 record01.appendChild(field9);
 
                 Element field10 = doc.createElement("field");
                 field10.setAttribute("fieldName", "cGroupHierarchy2");
-                field10.setTextContent(" ");
+                field10.setTextContent("HSB3");
                 record01.appendChild(field10);
 
                 Element field11 = doc.createElement("field");
@@ -227,14 +223,23 @@ public class CreateXmlFileDemo {
                 document.appendChild(record01);
             }
 
-           Element record02 = Record02.getRecord02(doc);
+           Element record02 = Record02.getRecord02(doc, clmdetList);
             document.appendChild(record02);
 
-            Element record03 = Record03.getRecord03(doc);
+            Element record03 = Record03.getRecord03(doc, headerGroup);
             document.appendChild(record03);
+
+            Element record04 = Record04.getRecord04(doc);
+            document.appendChild(record04);
 
             Element record06 = Record06.getRecord06(doc);
             document.appendChild(record06);
+
+            Element record07 = Record07.getRecord07(doc);
+            document.appendChild(record07);
+
+            Element record17 = Record17.getRecord17(doc);
+            document.appendChild(record17);
 
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyMMddHHmmss");
             LocalDateTime now = LocalDateTime.now();
