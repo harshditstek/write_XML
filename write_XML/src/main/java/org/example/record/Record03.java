@@ -8,11 +8,11 @@ import java.util.List;
 
 public class Record03 {
 
-    public static Element getRecord03(Document doc, List<String[]> headerGroup) {
+    public static Element getRecord03(Document doc, String[] headerData) {
         Element record03 = null;
-        String[] headerData;
-        for (int i = 0; i < headerGroup.size(); i++) {
-            headerData = headerGroup.get(i);
+        //String[] headerData;
+       // for (int i = 0; i < headerGroup.size(); i++) {
+           // headerData = headerGroup.get(i);
             record03 = doc.createElement("record");
             Attr attrType = doc.createAttribute("recordType");
             attrType.setValue(String.valueOf("03"));
@@ -25,7 +25,7 @@ public class Record03 {
 
             Element field2 = doc.createElement("field");
             field2.setAttribute("fieldName", "cClaimNumber");
-            field2.setTextContent(" ");
+            field2.setTextContent("");
             record03.appendChild(field2);
 
             Element field3 = doc.createElement("field");
@@ -66,14 +66,14 @@ public class Record03 {
 
             Element field10 = doc.createElement("field");
             field10.setAttribute("fieldName", "cPatientResponsibility");
-            field10.setTextContent(" ");
+            field10.setTextContent("");
             record03.appendChild(field10);
 
             Element field11 = doc.createElement("field");
             field11.setAttribute("fieldName", "cClaimRelationString");
-            field11.setTextContent(" ");
+            field11.setTextContent("");
             record03.appendChild(field11);
-        }
+
         return record03;
     }
 }

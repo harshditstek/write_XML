@@ -4,6 +4,7 @@ import org.example.beans.CLMHDR;
 
 public class Main {
     public static void main(String[] args) {
+        System.out.println("Please Wait!");
         String hgrpNo = "";
         String hchkdt = "";
         if (args.length == 2) {

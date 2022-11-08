@@ -22,12 +22,12 @@ public class NumToWords {
                 "",        "one",       "two",      "three",
                 "four",    "five",      "six",      "seven",
                 "eight",   "nine",      "ten",      "eleven",
-                "twelve",  "thirteen",  "fourteen", "fifteen",
+                "twelve",  "thirteen",  "Fourteen", "fifteen",
                 "sixteen", "seventeen", "eighteen", "nineteen"
         };
 
-        String tens[] = { "", "twenty", "thirty",
-                "forty", "fifty",  "sixty",
+        String tens[] = { "",        "twenty", "thirty",
+                "forty",   "fifty",  "sixty",
                 "seventy", "eighty", "ninety" };
 
         if (n < 20L)
