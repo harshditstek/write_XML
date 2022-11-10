@@ -45,7 +45,7 @@ public class Record00 {
 
         Element field7 = doc.createElement("field");
         field7.setAttribute("fieldName", "cRecipientCode");
-        field7.setTextContent("I");
+        field7.setTextContent("P");
         record.appendChild(field7);
 
         Element field8 = doc.createElement("field");

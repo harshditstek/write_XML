@@ -14,11 +14,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class CreateXmlFileDemo {
@@ -26,7 +24,6 @@ public class CreateXmlFileDemo {
         try {
             List<String[]> clmnotList = new ArrayList<String[]>();
             List<String[]> clmdetList = new ArrayList<String[]>();
-           // List<String[]> insdepList = new ArrayList<String[]>();
 
             String hprovd = "", hassgn = "", ssn = "", hclmno = "", cliamNumber = "", clmnot2 = "", hfill7 = "", hdep = "";
             String[] insdepData=null, providerData = null, clmnotData, insureData = null, headerData, clmdetData;
@@ -34,7 +31,6 @@ public class CreateXmlFileDemo {
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.newDocument();
-            // doc.setXmlStandalone(true);
             Element document = null;
             Element formatId = null;
 
@@ -118,7 +114,7 @@ public class CreateXmlFileDemo {
                     insdepData = CLMHDR.getInsdep(ssn);
                 }
                 if (insdepData!=null) {
-                    field6.setTextContent(insdepData[6] + " " + insdepData[5]);
+                    field6.setTextContent(insdepData[6].trim() + " " + insdepData[5].trim());
                 } else {
                     field6.setTextContent("");
                 }
@@ -168,7 +164,7 @@ public class CreateXmlFileDemo {
 
                 for (int i = 0; i < clmdetList.size(); i++) {
                     clmdetData = clmdetList.get(i);
-                    Element record02 = Record02.getRecord02(doc, clmdetData, cliamNumber);
+                    Element record02 = Record02.getRecord02(doc, clmdetData, headerData, cliamNumber, clmdetList.get(i+1));
                     document.appendChild(record02);
                 }
 
@@ -179,10 +175,11 @@ public class CreateXmlFileDemo {
                 document.appendChild(record04);
 
                 if (headerData[0].trim().equalsIgnoreCase("Y")) {
-                    Element record06 = Record06.getRecord06(doc, headerData);
+                    Element record06 = Record06.getRecordHeader06(doc, headerData, providerData);
                     document.appendChild(record06);
                 } else {
-
+                    Element record06 = Record06.getRecord06(doc, headerData, insureData);
+                    document.appendChild(record06);
                 }
 
                 Element record07 = Record07.getRecord07(doc);

@@ -29,7 +29,7 @@ public class Record17 {
         field3.setAttribute("fieldName", "cDiscount");
         String dvencd = clmdetData[26].trim();
         if (!dvencd.equals("")) {
-            double discount = Double.valueOf(headerData[10]) - Double.valueOf(headerData[11]);
+            double discount = Double.valueOf(headerData[5]) - Double.valueOf(headerData[7]);
             field3.setTextContent(String.valueOf(discount));
         } else {
             field3.setTextContent("00");

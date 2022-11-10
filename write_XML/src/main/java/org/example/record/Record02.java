@@ -1,16 +1,15 @@
 package org.example.record;
 
+import org.example.Main;
+import org.example.beans.iSeries;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-
 public class Record02 {
 
-    public static Element getRecord02(Document doc, String[] clmdetDate, String cliamNumber) {
+    public static Element getRecord02(Document doc, String[] clmdetData, String[] headerData, String cliamNumber,
+                                      String[] clmdetData2) {
         Element record02 = doc.createElement("record");
         Attr attrType = doc.createAttribute("recordType");
         attrType.setValue(String.valueOf("02"));
@@ -28,17 +27,17 @@ public class Record02 {
 
         Element field3 = doc.createElement("field");
         field3.setAttribute("fieldName", "cServiceLineSequence");
-        field3.setTextContent("000" + clmdetDate[1].trim());
-        //field3.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+        field3.setTextContent("000" + clmdetData[1].trim());
         record02.appendChild(field3);
 
         Element field4 = doc.createElement("field");
         field4.setAttribute("fieldName", "cLineNumber");
-        field4.setTextContent(clmdetDate[1].trim());
+        field4.setTextContent(clmdetData[1].trim());
         record02.appendChild(field4);
 
-        String dprc = clmdetDate[8].trim();
-        if(dprc.length() < 7){
+        String dprc = clmdetData[8].trim();
+        String cPlaceofService = null;
+        if (dprc.length() < 7) {
             Element field5 = doc.createElement("field");//dprc
             field5.setAttribute("fieldName", "cProcedureCode");
             field5.setTextContent(" ");
@@ -48,10 +47,9 @@ public class Record02 {
             field6.setAttribute("fieldName", "cPlaceofService");
             field6.setTextContent("");
             record02.appendChild(field6);
-        }else{
+        } else {
             String cProcedureCode = dprc.substring(0, Math.min(dprc.length(), 5));
-
-            String cPlaceofService = dprc.substring(5, dprc.length());
+            cPlaceofService = dprc.substring(5, dprc.length());
 
             Element field5 = doc.createElement("field");//dprc
             field5.setAttribute("fieldName", "cProcedureCode");
@@ -66,39 +64,38 @@ public class Record02 {
 
         Element field7 = doc.createElement("field");
         field7.setAttribute("fieldName", "cUnits");
-        field7.setTextContent(clmdetDate[9].trim());
+        field7.setTextContent(clmdetData[9].trim());
         record02.appendChild(field7);
 
-        try {
-            String cServiceDateStart = clmdetDate[6].trim();
-            if (cServiceDateStart.length() == 5) {
-                cServiceDateStart = "0" + cServiceDateStart;
-            }
-            Date d = new SimpleDateFormat("MMddyy").parse(cServiceDateStart);
-            SimpleDateFormat d2 = new SimpleDateFormat("yyyyMMdd");
-            String formattedProcessDate = d2.format(d).toString();
-
-            Element field8 = doc.createElement("field");
-            field8.setAttribute("fieldName", "cServiceDateStart");
-            field8.setTextContent(cServiceDateStart);
-            record02.appendChild(field8);
-        } catch (Exception ex) {
-
-        }
+        Element field8 = doc.createElement("field");
+        field8.setAttribute("fieldName", "cServiceDateStart");
+        //field8.setTextContent(CLMHDR.formattedDate(clmdetDate[6].trim()));
+        field8.setTextContent(clmdetData[6].trim());
+        record02.appendChild(field8);
 
         Element field9 = doc.createElement("field");
         field9.setAttribute("fieldName", "cServiceDateEnd");
-        field9.setTextContent("");
+        if (cPlaceofService.equalsIgnoreCase("FR")){
+            field9.setTextContent(clmdetData2[6].trim());
+        }else{
+            field9.setTextContent(clmdetData[6].trim());
+        }
         record02.appendChild(field9);
 
         Element field10 = doc.createElement("field");
         field10.setAttribute("fieldName", "cTotalCharge");
-        field10.setTextContent(clmdetDate[10].trim());
+        field10.setTextContent(clmdetData[10].trim());
         record02.appendChild(field10);
 
         Element field11 = doc.createElement("field");
         field11.setAttribute("fieldName", "cDiscount");
-        field11.setTextContent("");
+        String dvencd = clmdetData[26].trim();
+        if (!dvencd.equals("")) {
+            double discount = Double.valueOf(clmdetData[10]) - Double.valueOf(clmdetData[11]);
+            field11.setTextContent(String.valueOf(discount));
+        } else {
+            field11.setTextContent("00");
+        }
         record02.appendChild(field11);
 
         Element field12 = doc.createElement("field");
@@ -108,17 +105,17 @@ public class Record02 {
 
         Element field13 = doc.createElement("field");
         field13.setAttribute("fieldName", "cAllowed");
-        field13.setTextContent(clmdetDate[11].trim());
+        field13.setTextContent(clmdetData[11].trim());
         record02.appendChild(field13);
 
         Element field14 = doc.createElement("field");
         field14.setAttribute("fieldName", "cNotesCode1");
-        field14.setTextContent(clmdetDate[13].trim());
+        field14.setTextContent(clmdetData[13].trim());
         record02.appendChild(field14);
 
         Element field15 = doc.createElement("field");
         field15.setAttribute("fieldName", "cNotesCode2");
-        field15.setTextContent(clmdetDate[14].trim());
+        field15.setTextContent(clmdetData[14].trim());
         record02.appendChild(field15);
 
         Element field16 = doc.createElement("field");
@@ -128,17 +125,17 @@ public class Record02 {
 
         Element field17 = doc.createElement("field");
         field17.setAttribute("fieldName", "cDeductible");
-        field17.setTextContent(clmdetDate[18].trim());
+        field17.setTextContent(clmdetData[18].trim());
         record02.appendChild(field17);
 
         Element field18 = doc.createElement("field");
         field18.setAttribute("fieldName", "cCopay");
-        field18.setTextContent(clmdetDate[30].trim());
+        field18.setTextContent(clmdetData[30].trim());
         record02.appendChild(field18);
 
         Element field19 = doc.createElement("field");
         field19.setAttribute("fieldName", "cCoinsurance");
-        field19.setTextContent(clmdetDate[20].trim());
+        field19.setTextContent(clmdetData[20].trim());
         record02.appendChild(field19);
 
         Element field20 = doc.createElement("field");
@@ -148,7 +145,8 @@ public class Record02 {
 
         Element field21 = doc.createElement("field");
         field21.setAttribute("fieldName", "cPatientResponsibility");
-        field21.setTextContent("");
+        String cPatientResponsibility = iSeries.generatePatientResponsibility(Main.member, clmdetData[0].trim());
+        field21.setTextContent(cPatientResponsibility);
         record02.appendChild(field21);
 
         Element field22 = doc.createElement("field");
@@ -156,14 +154,16 @@ public class Record02 {
         field22.setTextContent("");
         record02.appendChild(field22);
 
-        Element field23 = doc.createElement("field");
-        field23.setAttribute("fieldName", "cToothNumber");
-        field23.setTextContent("");
-        record02.appendChild(field23);
+        if (headerData[12].equalsIgnoreCase("D")) {
+            Element field23 = doc.createElement("field");//
+            field23.setAttribute("fieldName", "cToothNumber");
+            field23.setTextContent(dprc.substring(2, 4));
+            record02.appendChild(field23);
+        }
 
         Element field24 = doc.createElement("field");
         field24.setAttribute("fieldName", "cToothSurface");
-        field24.setTextContent(clmdetDate[29].trim());
+        field24.setTextContent(clmdetData[29].trim());
         record02.appendChild(field24);
 
         Element field25 = doc.createElement("field");
@@ -180,9 +180,7 @@ public class Record02 {
         field27.setAttribute("fieldName", "cNotesCode5");
         field27.setTextContent("");
         record02.appendChild(field27);
-        // }
 
-        // doc.appendChild(record01);
         return record02;
     }
 }
