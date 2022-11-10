@@ -8,8 +8,7 @@ import org.w3c.dom.Element;
 
 public class Record02 {
 
-    public static Element getRecord02(Document doc, String[] clmdetData, String[] headerData, String cliamNumber,
-                                      String[] clmdetData2) {
+    public static Element getRecord02(Document doc, String[] clmdetData, String[] headerData, String cliamNumber) {
         Element record02 = doc.createElement("record");
         Attr attrType = doc.createAttribute("recordType");
         attrType.setValue(String.valueOf("02"));
@@ -76,7 +75,8 @@ public class Record02 {
         Element field9 = doc.createElement("field");
         field9.setAttribute("fieldName", "cServiceDateEnd");
         if (cPlaceofService.equalsIgnoreCase("FR")){
-            field9.setTextContent(clmdetData2[6].trim());
+            //field9.setTextContent(clmdetData2[6].trim());
+            field9.setTextContent("");
         }else{
             field9.setTextContent(clmdetData[6].trim());
         }
