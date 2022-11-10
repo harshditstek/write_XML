@@ -9,14 +9,7 @@ import java.util.List;
 
 public class Record17 {
     public static Element getRecord17(Document doc, String[] headerData, String[] clmdetData) {
-
-        //String[] headerData;
         Element record17 = null;
-
-        // for(int i=0;i<headerGroup.size();i++) {
-        // headerData = headerGroup.get(i);
-
-
         record17 = doc.createElement("record");
         Attr attrType = doc.createAttribute("recordType");
         attrType.setValue(String.valueOf("17"));
@@ -35,8 +28,8 @@ public class Record17 {
         Element field3 = doc.createElement("field");
         field3.setAttribute("fieldName", "cDiscount");
         String dvencd = clmdetData[26].trim();
-        if (dvencd.equals("")) {
-            double discount = Double.valueOf(headerData[5]) - Double.valueOf(headerData[7]);
+        if (!dvencd.equals("")) {
+            double discount = Double.valueOf(headerData[10]) - Double.valueOf(headerData[11]);
             field3.setTextContent(String.valueOf(discount));
         } else {
             field3.setTextContent("00");
@@ -50,8 +43,8 @@ public class Record17 {
 
         Element field5 = doc.createElement("field");
         field5.setAttribute("fieldName", "cPatientResponsibility");
-        //String cPatientResponsibility = iSeries.generatePatientResponsibility("TRT",headerData[3].trim());
-        field5.setTextContent("");
+        String cPatientResponsibility = iSeries.generatePatientResponsibility("TRT",headerData[3].trim());
+        field5.setTextContent(cPatientResponsibility);
         record17.appendChild(field5);
 
         return record17;

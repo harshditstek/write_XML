@@ -14,7 +14,7 @@ public class iSeries {
     private static final String HOSTNAME = "JAVALOOK";
     private static final String PASSWORD = "TWMC1990";
     private static AS400 system = null;
-    private static String IBM_CHARSET = "UTF-8";
+    private static String IBM_CHARSET = "IBM285";
 
     public static List<String[]> executeSQLByAlias(String sql, String alias, String file) {
         String aliasSQL = "CREATE ALIAS " + alias + " FOR " + file;
@@ -63,8 +63,6 @@ public class iSeries {
     }
 
     public static String generatePatientResponsibility(String member, String claimNum) {
-        // AS400 system = null;
-
         // Define the CL program.
         String programName = "/QSYS.lib/HTHOBJV1.lib/GETPTRC.pgm";
 
@@ -136,4 +134,41 @@ public class iSeries {
         }
     }
 
+    public static String[] getSingleRecord(String sql, String alias, String file) {
+        String aliasSQL = "CREATE ALIAS " + alias + " FOR " + file;
+        String[] result = null;
+        Statement statement;
+        ResultSet resultSet;
+        ResultSetMetaData resultSetMetaData;
+        Connection connection = null;
+        try {
+            Class.forName(DRIVER);
+            connection = DriverManager.getConnection(URL, HOSTNAME, PASSWORD);
+            statement = connection.createStatement();
+            statement.execute(aliasSQL);
+
+            if (sql.substring(0, 6).equalsIgnoreCase("SELECT")) {
+                resultSet = statement.executeQuery(sql);
+                resultSetMetaData = resultSet.getMetaData();
+
+                while (resultSet.next()) {
+                    result = new String[resultSetMetaData.getColumnCount()];
+                    for (int idx = 0; idx < result.length; idx++) {
+                        result[idx] = resultSet.getString(idx + 1);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+        }
+        return result;
+    }
 }

@@ -5,7 +5,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 public class Record04 {
-    public static Element getRecord04(Document doc) {
+    public static Element getRecord04(Document doc, String claimNumber, String clmont2) {
         Element record04 = doc.createElement("record");
         Attr attrType = doc.createAttribute("recordType");
         attrType.setValue(String.valueOf("04"));
@@ -18,7 +18,7 @@ public class Record04 {
 
         Element field2 = doc.createElement("field");//clmnot
         field2.setAttribute("fieldName", "cClaimNumber");
-        field2.setTextContent("");
+        field2.setTextContent(claimNumber);
         record04.appendChild(field2);
 
         Element field3 = doc.createElement("field");
@@ -29,7 +29,7 @@ public class Record04 {
 
         Element field4 = doc.createElement("field");
         field4.setAttribute("fieldName", "cDescription");
-        field4.setTextContent("");
+        field4.setTextContent(clmont2);
         record04.appendChild(field4);
 
         return record04;
