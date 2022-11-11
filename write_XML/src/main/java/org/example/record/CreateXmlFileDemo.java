@@ -164,9 +164,15 @@ public class CreateXmlFileDemo {
 
                 for (int i = 0; i < clmdetList.size(); i++) {
                     clmdetData = clmdetList.get(i);
-                    //Element record02 = Record02.getRecord02(doc, clmdetData, headerData, cliamNumber, clmdetList.get(i+1));
-                    Element record02 = Record02.getRecord02(doc, clmdetData, headerData, cliamNumber);
-                    document.appendChild(record02);
+                    if(i+1<clmdetList.size()) {
+                        Element record02 = Record02.getRecord02(doc, clmdetData, headerData, cliamNumber, clmdetList.get(i + 1));
+                        document.appendChild(record02);
+                    }else{
+                        Element record02 = Record02.getRecord02(doc, clmdetData, headerData, cliamNumber, null);
+                        document.appendChild(record02);
+                    }
+                    //Element record02 = Record02.getRecord02(doc, clmdetData, headerData, cliamNumber);
+
                 }
 
                 Element record03 = Record03.getRecord03(doc, headerData, cliamNumber);
