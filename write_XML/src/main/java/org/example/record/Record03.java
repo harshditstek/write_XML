@@ -1,5 +1,7 @@
 package org.example.record;
 
+import org.example.Main;
+import org.example.beans.iSeries;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -62,7 +64,8 @@ public class Record03 {
 
         Element field10 = doc.createElement("field");
         field10.setAttribute("fieldName", "cPatientResponsibility");
-        field10.setTextContent("");
+        String cPatientResponsibility = iSeries.generatePatientResponsibility(Main.member, headerData[3].trim());
+        field10.setTextContent(cPatientResponsibility);
         record03.appendChild(field10);
 
         Element field11 = doc.createElement("field");

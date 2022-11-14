@@ -196,9 +196,9 @@ public class CreateXmlFileDemo {
                 document.appendChild(record17);
             }
 
-            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyMMddHHmmss");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddyy");
             LocalDateTime now = LocalDateTime.now();
-            String filePath = "/tmp/" + "3556BH20220722R01E559D11_" + dtf.format(now) + ".xml";
+            String filePath = "/tmp/" + "BL_CHK_" + dtf.format(now) + ".xml";
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
